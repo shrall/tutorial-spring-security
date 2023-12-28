@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-TutorialSpringSecurityApplication<tutorial-spring-security>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.shrall.tutorialspringsecurity.TutorialSpringSecurityApplication",
+      "projectName": "tutorial-spring-security",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
