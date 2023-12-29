@@ -1,5 +1,7 @@
 package com.shrall.tutorialspringsecurity.services;
 
+import java.util.Date;
+
 import org.springframework.security.core.userdetails.UserDetails;
 
 public interface JWTService {
@@ -8,10 +10,10 @@ public interface JWTService {
 
     String extractUsername(String token);
 
-    // Date extractExpiration(String token);
+    Date extractExpiration(String token);
 
-    // boolean isTokenExpired(String token);
+    boolean isTokenExpired(String token);
 
-    // boolean validateToken(String token, UserDetails userDetails);
+    boolean validateToken(String token, UserDetails userDetails);
 
 }
