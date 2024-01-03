@@ -6,6 +6,9 @@ import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
+import com.shrall.tutorialspringsecurity.services.JWTService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -13,12 +16,13 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
-public class JWTServiceImpl {
+@Service
+public class JWTServiceImpl implements JWTService {
     // NOTE - bad practice to store secret key application.properties
     @Value("${jwt.secret-key}")
     private String secretKey;
 
-    private String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
