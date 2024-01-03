@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.shrall.tutorialspringsecurity.dto.JWTAuthResponse;
+import com.shrall.tutorialspringsecurity.dto.RefreshTokenRequest;
 import com.shrall.tutorialspringsecurity.dto.SigninRequest;
 import com.shrall.tutorialspringsecurity.dto.SignupRequest;
 import com.shrall.tutorialspringsecurity.entities.Role;
@@ -55,5 +56,25 @@ public class AuthServiceImpl implements AuthService {
         jwtAuthResponse.setRole(user.getRole().name());
 
         return jwtAuthResponse;
+    }
+
+    public JWTAuthResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
+        String userEmail = jwtService.extractUsername(refreshTokenRequest.getToken());
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new IllegalArgumentException("E-Mail not found"));
+
+        if (jwtService.validateToken(refreshTokenRequest.getToken(), user)) {
+            var token = jwtService.generateToken(user);
+
+            JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
+
+            jwtAuthResponse.setToken(token);
+            jwtAuthResponse.setRefreshToken(refreshTokenRequest.getToken());
+            jwtAuthResponse.setEmail(user.getEmail());
+            jwtAuthResponse.setRole(user.getRole().name());
+
+            return jwtAuthResponse;
+        }
+        return null;
     }
 }
